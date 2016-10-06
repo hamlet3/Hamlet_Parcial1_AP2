@@ -13,7 +13,7 @@ namespace Parcial1
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) {
-                MaterialesGv.DataSource = Session["Dt"];
+                MaterialesGv.DataSource = ObtenerNuevaLista();
                 MaterialesGv.DataBind();
             }
         }
@@ -22,6 +22,7 @@ namespace Parcial1
             Razontxt.Text = "";
             Materialtxt.Text = "";
             Cantidadtxt.Text = "";
+            BuscarIdtxt.Text = "";
             MaterialesGv.DataSource = Session["Dt"];
             MaterialesGv.DataBind();
         }
@@ -115,6 +116,7 @@ namespace Parcial1
 
         protected void BuscarIdBtn_Click(object sender, EventArgs e)
         {
+            
             Razones razon = new Razones();
             int aux;
             int.TryParse(BuscarIdtxt.Text, out aux);
