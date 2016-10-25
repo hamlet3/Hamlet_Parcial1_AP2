@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DAL
 
         public ConexionDb()
         {
-            con = new SqlConnection("Data Source= Hamlet-PC; Initial Catalog = Parcial1db;  Integrated Security=true");
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString);
             Cmd = new SqlCommand();
         }
 

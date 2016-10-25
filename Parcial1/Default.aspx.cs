@@ -15,6 +15,8 @@ namespace Parcial1
             if (!IsPostBack) {
                 MaterialesGv.DataSource = ObtenerNuevaLista();
                 MaterialesGv.DataBind();
+
+
             }
         }
 
@@ -23,6 +25,7 @@ namespace Parcial1
             Materialtxt.Text = "";
             Cantidadtxt.Text = "";
             BuscarIdtxt.Text = "";
+            Preciotxt.Text = "";
             MaterialesGv.DataSource = Session["Dt"];
             MaterialesGv.DataBind();
         }
@@ -79,7 +82,7 @@ namespace Parcial1
         {
             if (Session["Material"] == null)
             {
-                List<Materiales> material2 = ObtenerLista();
+                List<Materiales> material2 = this.ObtenerNuevaLista();
                 material2.Add(material);
                 Session["Material"] = material2;
             }else
@@ -95,6 +98,7 @@ namespace Parcial1
         protected void AgregarBtn_Click(object sender, EventArgs e)
         {
             int aux;
+            int aux2;
             Razones razon;
             if (Session["Razon"] == null)
                 Session["Razon"] = new Razones();
@@ -102,12 +106,14 @@ namespace Parcial1
             razon = (Razones)Session["Razon"];
             Materiales material = new Materiales();
             int.TryParse(Cantidadtxt.Text, out aux);
+            int.TryParse(Preciotxt.Text, out aux2);
 
-            razon.AgregarMaterial(Materialtxt.Text, aux);
+            razon.AgregarMaterial(Materialtxt.Text, aux2, aux);
             Session["Razon"] = razon;
 
             material.Material = Materialtxt.Text;
             material.Cantidad = aux;
+            material.Precio = aux2;
 
             GuardatLista(material);
             MaterialesGv.DataSource = ObtenerLista();

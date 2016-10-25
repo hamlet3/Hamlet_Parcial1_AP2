@@ -15,8 +15,8 @@ namespace BLL
 
         public Razones() { }
 
-        public void AgregarMaterial(string material, int cantidad) {
-            ListaMateriales.Add(new Materiales(material, cantidad));
+        public void AgregarMaterial(string material,int precio, int cantidad) {
+            ListaMateriales.Add(new Materiales(material, precio, cantidad));
         }
 
         public override bool Insertar()
@@ -30,7 +30,7 @@ namespace BLL
                 int.TryParse(identity.ToString(), out retornar);
                 foreach(Materiales material in ListaMateriales)
                 {
-                    conexion.Ejecutar(String.Format("Insert into Materiales(RazonId, Material, Cantidad) Values({0},'{1}',{2})", retornar, material.Material, material.Cantidad));
+                    conexion.Ejecutar(String.Format("Insert into Materiales(RazonId, Material, Precio, Cantidad) Values({0},'{1}', {2}, {3})", retornar, material.Material, material.Precio, material.Cantidad));
                 }
             }catch(Exception ex) { throw ex; }
 
@@ -48,7 +48,7 @@ namespace BLL
                 conexion.Ejecutar(String.Format("Delete from Materiales where RazonId ={0}", this.RazonId));
 
                 foreach (Materiales material in ListaMateriales) {
-                    conexion.Ejecutar(String.Format("Insert into Materiales(RazonId, Material, Cantidad) Values ({0},'{1}',{2})",this.RazonId, material.Material, material.Cantidad));
+                    conexion.Ejecutar(String.Format("Insert into Materiales(RazonId, Material, Precio, Cantidad) Values ({0},'{1}', {2}, {3})",this.RazonId, material.Material,material.Precio, material.Cantidad));
                 }
             }catch(Exception ex) { throw ex; }
             return retornar;
@@ -82,7 +82,7 @@ namespace BLL
                 MaterialDt = conexion.ObtenerDatos(String.Format("Select * from Materiales where RazonId ="+IdBuscado));
 
                 foreach (DataRow row in MaterialDt.Rows) {
-                    AgregarMaterial(row["Material"].ToString(),(int)row["Cantidad"]);
+                    AgregarMaterial(row["Material"].ToString(),(int)row["Precio"], (int)row["Cantidad"]);
                 }
                 
             }
